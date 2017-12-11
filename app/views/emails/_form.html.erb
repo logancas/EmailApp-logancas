@@ -1,0 +1,47 @@
+<% if logged_in? %>
+<%= form_for email do |f| %>
+  <% if email.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(email.errors.count, "error") %> prohibited this email from being saved:</h2>
+
+      <ul>
+      <% email.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :sender_id, value: current_user.id %>
+
+  <div class="field">
+    <%= f.label :recipient %>
+    <%= f.collection_select :recipient_id, User.order(:email_address), :id, :email_address%>
+  </div>
+
+  <div class="field">
+    <%= f.label :subject %>
+    <%= f.text_field :subject %>
+  </div>
+
+  <div class="field">
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+  </div>
+
+  <h4>Add Attachments (optional):</h4>
+    <%= f.nested_fields_for :attachments do |attachment_form| =%>
+      <div class='field'>
+        <%= attachment_form.file_field :file %>
+      </div>
+    <% end %>
+    <p><%= f.add_nested_fields_link :attachments %></p>
+
+  <div class="actions">
+     <%= f.submit 'Send Email',name: 'publish', class: 'btn btn-secondary' %>
+     <%= f.submit 'Save Draft', name: 'draft', class: 'btn btn-secondary' %>
+  </div>
+
+
+<% end %>
+<% end %>

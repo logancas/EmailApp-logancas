@@ -1,0 +1,13 @@
+<div class="container-fluid">
+  <div class="row">
+  <% if logged_in? %>
+    <%= render "layouts/sidebar"%>
+
+    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+      <%= render "emails/outbox"%>
+    </main>
+
+    <%else%>
+    <%= 'Welcome to CIS196 Email! Sign up or log in to get started!' %>
+    <%end%>
+    </div></div>

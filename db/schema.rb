@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203192657) do
+ActiveRecord::Schema.define(version: 20171203205443) do
+
+  create_table "attachments", force: :cascade do |t|
+    t.integer  "email_id"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["email_id"], name: "index_attachments_on_email_id"
+  end
+
+  create_table "emails", force: :cascade do |t|
+    t.integer  "sender_id"
+    t.integer  "recipient_id"
+    t.string   "subject"
+    t.text     "body"
+    t.string   "status"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["recipient_id"], name: "index_emails_on_recipient_id"
+    t.index ["sender_id"], name: "index_emails_on_sender_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email_address"

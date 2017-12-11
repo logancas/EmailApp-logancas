@@ -1,0 +1,30 @@
+
+<h1> Inbox </h1>
+
+  <div class="table-responsive">
+            <table class="table table-striped">
+  <thead>
+  	<tr>
+    <th>Received At</th>
+    <th>From</th>
+  <th>Subject</th>
+  <th>Preview</th></tr>
+  </thead>
+
+  <tbody>
+    <% if current_user.received_emails.empty?%>
+      <tr>
+        <td>No received emails yet...</td>
+      </tr>
+    <% end %>
+    <% current_user.received_emails.each do |email| %>
+      <tr>
+      <tr><td>
+          <% Time.zone = 'Eastern Time (US & Canada)' %>
+          <%= link_to email.updated_at.in_time_zone.strftime('%B %e, %Y, %T'), email %></td>
+      <td><%= link_to User.find(email.sender).first_name +  ' ' + User.find(email.sender).last_name, email %></td>
+      <td><%= link_to email.subject, email %></td>
+      <td><%= link_to email.body[0,15] + '...', email %></td></tr>
+    <% end %>
+  </tbody>
+</table>

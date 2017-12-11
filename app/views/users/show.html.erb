@@ -1,24 +1,27 @@
-<p id="notice"><%= notice %></p>
+<div class="container-fluid">
+  <div class="row">
+    <% if logged_in? %>
+    <%= render "layouts/sidebar"%>
+    <%end%>
+<div class="row">
+  <div class="col-12">
+    <h2>
+      <div class="float-right">
+        <% if logged_in? %>
+          <% if @user == current_user %>
+            <%= @user.first_name + ' ' + @user.last_name%>
+            <%= link_to 'Edit Account', edit_user_path(current_user), class: 'btn btn-tertiary' %>
+            <%= link_to 'Delete Account', current_user, method: :delete, class: 'btn btn-tertiary' %>
 
-<p>
-  <strong>Email address:</strong>
-  <%= @user.email_address %>
-</p>
-
-<p>
-  <strong>First name:</strong>
-  <%= @user.first_name %>
-</p>
-
-<p>
-  <strong>Last name:</strong>
-  <%= @user.last_name %>
-</p>
-
-<p>
-  <strong>Password hash:</strong>
-  <%= @user.password_hash %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+          <% else %>
+            <%= link_to 'Return to Homepage', root_path, class: 'btn btn-tertiary' %>
+          <% end %>
+        <% else %>
+            <%= link_to 'Return to Homepage', root_path, class: 'btn btn-tertiary' %>
+        <% end %>
+      </div>
+    </h2>
+  </div>
+</div>
+</div>
+</div>

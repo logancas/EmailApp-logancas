@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<% if logged_in? && (current_user == @email.sender || current_user == @email.recipient)%>
+<p>
+  <strong>Sender:</strong>
+  <%= User.find(@email.sender).first_name + ' ' + User.find(@email.sender).last_name %>
+</p>
+
+<p>
+  <strong>Recipient:</strong>
+  <%=  User.find(@email.recipient).first_name + ' ' + User.find(@email.recipient).last_name %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @email.subject %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @email.body %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @email.status %>
+</p>
+
+<p>
+  <strong>Attachments:</strong>
+  <%count = 1%>
+  <% @email.attachments.each do |file| %>
+    <% label = 'Attachment ' + count.to_s + ', ' %>
+    <% if count == @email.attachments.size %>
+      <% label = 'Attachment ' + count.to_s %>
+    <% end %>
+    <%= link_to label, file.file.url(:original, false) %>
+    <% count += 1%>
+  <% end %>
+  <% if @email.attachments.size == 0 %>
+  <%= 'None' %>
+  <% end %>
+</p>
+
+<% if @email.status == 'draft' %>
+  <%= link_to 'Edit', edit_email_path(@email) %>
+<% end %>
+
+<%= link_to 'Delete', @email, method: 'delete'%>
+<% else %>
+  <%= link_to 'Return to Homepage', root_path, class: 'btn btn-tertiary' %>
+<%end%>

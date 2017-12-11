@@ -1,0 +1,20 @@
+<% if logged_in? %>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <%= render "emails/inbox"%>
+      <%= render "emails/outbox"%>
+      <%= render "emails/draftbox"%>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+    </div>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <p>You need to be logged in to see emails.</p>
+    </div>
+  </div>
+<% end %>

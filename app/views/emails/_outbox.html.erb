@@ -1,0 +1,27 @@
+<h1> Outbox </h1>
+
+<div class="table-responsive">
+            <table class="table table-striped">
+  <thead>
+    <tr><th>Sent At</th>
+    <th>To</th>
+  <th>Subject</th>
+  <th>Preview</th></tr>
+  </thead>
+
+  <tbody>
+    <% if current_user.sent_emails.empty?%>
+      <tr>
+        <td>No sent emails yet...</td>
+      </tr>
+    <% end %>
+    <% current_user.sent_emails.each do |email| %>
+      <tr><tr><td>
+          <% Time.zone = 'Eastern Time (US & Canada)' %>
+          <%= link_to email.updated_at.in_time_zone.strftime('%B %e, %Y, %T'), email %></td>
+      <td><%= link_to User.find(email.recipient).first_name +  ' ' + User.find(email.recipient).last_name, email%></td>
+      <td><%= link_to email.subject, email %></td>
+      <td><%= link_to email.body[0,15] + '...', email %></td></tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
-  resources :users
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :emails
+  resources :users, :except => [:index]
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+  get '/users/:id/outbox', to: 'users#sent_emails'
+  root 'welcome#index'
+  get '/inbox', to: 'emails#inbox'
+  get '/outbox', to: 'emails#outbox'
+  get '/drafts', to: 'emails#drafts'
 end
